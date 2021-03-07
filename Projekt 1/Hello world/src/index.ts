@@ -15,19 +15,20 @@ class Project1App{
     num4: number;
 
     constructor(){
-        this.getNumberInputsValue();
+        this.setInputs();
+        this.setEventsToNumbersInput();
     }
 
     setInputs(){
-        this.number1Input = document.querySelector('number1');
-        this.number2Input = document.querySelector('number2');
-        this.number1Input = document.querySelector('number3');
-        this.number2Input = document.querySelector('number4');
+        this.number1Input = document.querySelector('#number1');
+        this.number2Input = document.querySelector('#number2');
+        this.number3Input = document.querySelector('#number3');
+        this.number4Input = document.querySelector('#number4');
 
-        this.sumInput = document.querySelector('sum');
-        this.avgInput = document.querySelector('avg');
-        this.minInput = document.querySelector('min');
-        this.maxInput = document.querySelector('max');
+        this.sumInput = document.querySelector('#sum');
+        this.avgInput = document.querySelector('#avg');
+        this.minInput = document.querySelector('#min');
+        this.maxInput = document.querySelector('#max');
     }
 
     getNumberInputsValue(){
@@ -38,6 +39,9 @@ class Project1App{
     }
     
     setStatsInputsValue(){
+
+        this.getNumberInputsValue();
+
         this.sumInput.value = (this.num1 + this.num2 + this.num3 + this.num4).toString();
         this.avgInput.value = ((this.num1 + this.num2 + this.num3 + this.num4)/4).toString();
         this.maxInput.value = (Math.max(this.num1, this.num2, this.num3, this.num4)).toString();
@@ -52,4 +56,4 @@ class Project1App{
     }
 }
 
-let project = new Project1App();
+const project = new Project1App();
