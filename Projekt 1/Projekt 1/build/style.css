@@ -4,3 +4,7 @@
     flex-direction: column;
     width: 180px;
 }
+.inputContainer
+{
+    display: flex;
+}

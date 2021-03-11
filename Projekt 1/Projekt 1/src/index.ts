@@ -2,7 +2,9 @@
 class Project1App{
 
     numberOfInputs: HTMLInputElement;
-    input: HTMLInputElement;
+    
+    //input: HTMLInputElement;
+    //button: HTMLElement;
 
     inputsValueArray: number[];
 
@@ -28,8 +30,34 @@ class Project1App{
         this.minInput.value = '0';
         this.maxInput.value = '0';
     }
+
+    makeInput(id: number){
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.id="input-" + id;
+        input.value = '0';
+        input.addEventListener('input', () => this.displayStats());
+        
+        return input;
+    }
+
+    makeButton(id: number){
+        const button = document.createElement('button');
+        button.innerHTML = "X";
+        button.id = "button-" + id;
+        button.addEventListener('click', () => this.deleteInput(button));
+
+        return button;
+    }
+
+    deleteInput(button: HTMLElement){
+        button.parentElement.remove();
+        this.numberOfInputs.value = document.getElementById('input-data').childElementCount.toString();
+
+        this.displayStats();
+    }
     
-    createInputs(){
+    createInputContainer(){
         const container = document.getElementById('input-data');
         container.innerHTML=null;
         this.setDefaultValuesToStats();
@@ -38,22 +66,29 @@ class Project1App{
 
         for(let i=0; i<amount; i++)
         {
-            this.input = document.createElement('input');
-            this.input.type = 'number';
-            this.input.id="input-" + i;
-            this.input.value = '0';
-            this.input.addEventListener('input', () => this.displayStats());
-            container.appendChild(this.input);
+            const inputContainer = document.createElement("div");
+            inputContainer.className = "inputContainer";
+            container.appendChild(inputContainer);
+            inputContainer.appendChild(this.makeInput(i));
+            inputContainer.appendChild(this.makeButton(i));
         }
     }
 
     displayStats(){
         this.getValuefromInputs()
-
+        
+        if(document.getElementById('input-data').childElementCount>0){
         this.sumInput.value = this.sum().toString();
         this.avgInput.value = this.avg().toString();
         this.maxInput.value = this.max().toString();
         this.minInput.value = this.min().toString();
+        }
+        else{
+            this.sumInput.value = "0";
+            this.avgInput.value = "0";
+            this.maxInput.value = "0";
+            this.minInput.value = "0"; 
+        }
     }
 
     getNumberOfInputs(){
@@ -65,18 +100,18 @@ class Project1App{
 
     setCreateInputEvent(){
         this.numberOfInputs = document.querySelector("#numberOfInputs");
-        this.numberOfInputs.addEventListener('input', () => this.createInputs());
+        this.numberOfInputs.addEventListener('input', () => this.createInputContainer());
     }
 
     getValuefromInputs(){
         const amount = this.getNumberOfInputs();
-        this.inputsValueArray = [];  
+        this.inputsValueArray = []; 
+        
+        let inputsList = document.getElementsByClassName('inputContainer');
 
-        for(let i=0; i<amount; i++)
-        {
-            let tempId = "input-" + i;
-            let inputValue = +(document.getElementById(tempId) as HTMLInputElement).value;
-            this.inputsValueArray.push(inputValue);
+        for(let i=0; i<document.getElementById('input-data').childElementCount; i++)
+        {            
+            this.inputsValueArray.push(+inputsList.item(i).getElementsByTagName('input')[0].value);
         }
     }
 
@@ -85,7 +120,7 @@ class Project1App{
         return sum;
     }
     avg(){
-        const avg = this.getNumberOfInputs()/this.sum();
+        const avg = this.sum()/this.getNumberOfInputs();
         return avg;
     }
     max(){
