@@ -36,7 +36,7 @@ class Project1App{
         input.type = 'number';
         input.id="input-" + id;
         input.value = '0';
-        input.addEventListener('input', () => this.displayStats());
+        input.addEventListener('input', () => this.checkInput(input));
         
         return input;
     }
@@ -74,8 +74,16 @@ class Project1App{
         }
     }
 
-    displayStats(){
-        this.getValuefromInputs()
+    checkInput(input: HTMLInputElement){       
+        if(input.value.length === 0){
+            input.value = "0";
+        }
+
+        this.displayStats();
+    }
+
+    displayStats(){ 
+        this.getValuefromInputs();
         
         if(document.getElementById('input-data').childElementCount>0){
         this.sumInput.value = this.sum().toString();

@@ -21,7 +21,7 @@ var Project1App = /** @class */ (function () {
         input.type = 'number';
         input.id = "input-" + id;
         input.value = '0';
-        input.addEventListener('input', function () { return _this.displayStats(); });
+        input.addEventListener('input', function () { return _this.checkInput(input); });
         return input;
     };
     Project1App.prototype.makeButton = function (id) {
@@ -49,6 +49,12 @@ var Project1App = /** @class */ (function () {
             inputContainer.appendChild(this.makeInput(i));
             inputContainer.appendChild(this.makeButton(i));
         }
+    };
+    Project1App.prototype.checkInput = function (input) {
+        if (input.value.length === 0) {
+            input.value = "0";
+        }
+        this.displayStats();
     };
     Project1App.prototype.displayStats = function () {
         this.getValuefromInputs();
