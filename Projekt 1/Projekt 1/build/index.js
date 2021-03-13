@@ -19,7 +19,7 @@ var Project1App = /** @class */ (function () {
         var _this = this;
         var input = document.createElement('input');
         input.type = 'number';
-        input.id = "input-" + id;
+        input.className = 'numbers-input';
         input.value = '0';
         input.addEventListener('input', function () { return _this.checkInput(input); });
         return input;
@@ -28,7 +28,7 @@ var Project1App = /** @class */ (function () {
         var _this = this;
         var button = document.createElement('button');
         button.innerHTML = "X";
-        button.id = "button-" + id;
+        button.className = "delete-button";
         button.addEventListener('click', function () { return _this.deleteInput(button); });
         return button;
     };

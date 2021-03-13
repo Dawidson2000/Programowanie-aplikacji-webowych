@@ -34,7 +34,7 @@ class Project1App{
     makeInput(id: number){
         const input = document.createElement('input');
         input.type = 'number';
-        input.id="input-" + id;
+        input.className='numbers-input';
         input.value = '0';
         input.addEventListener('input', () => this.checkInput(input));
         
@@ -44,7 +44,7 @@ class Project1App{
     makeButton(id: number){
         const button = document.createElement('button');
         button.innerHTML = "X";
-        button.id = "button-" + id;
+        button.className = "delete-button";
         button.addEventListener('click', () => this.deleteInput(button));
 
         return button;
@@ -95,7 +95,7 @@ class Project1App{
             this.sumInput.value = "0";
             this.avgInput.value = "0";
             this.maxInput.value = "0";
-            this.minInput.value = "0"; 
+            this.minInput.value = "0";
         }
     }
 
