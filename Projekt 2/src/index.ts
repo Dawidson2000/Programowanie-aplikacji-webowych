@@ -9,7 +9,7 @@ function appStart(): void{
 function onKeyDown(event: KeyboardEvent): void{
     const key = event.key;
     const time = event.timeStamp;
-
+    getAudioTags()
     clapSound.play();
 }
 
