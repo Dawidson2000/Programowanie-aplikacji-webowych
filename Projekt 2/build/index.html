@@ -5,9 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drumkit</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<audio src="sounds/clap.wav" data-sound="clap"></audio>
-<script src="index.js"></script>
+    <audio src="sounds/boom.wav" data-sound="kick" data-key="q"></audio>
+    <audio src="sounds/clap.wav" data-sound="clap" data-key="w"></audio>
+    <audio src="sounds/hihat.wav" data-sound="hihat" data-key="e"></audio>
+    <audio src="sounds/kick.wav" data-sound="kick" data-key="r"></audio>
+    <audio src="sounds/openhat.wav" data-sound="openhat" data-key="a"></audio>
+    <audio src="sounds/ride.wav" data-sound="ride" data-key="s"></audio>
+    <audio src="sounds/snare.wav" data-sound="snare" data-key="d"></audio>
+    <audio src="sounds/tink.wav" data-sound="tink" data-key="f"></audio>
+    <audio src="sounds/tom.wav" data-sound="tom" data-key="z"></audio>
+     
+    <div id="buttons"></div>
+
+    <button id="startRecord1">Start</button>
+    <button id="stopRecord1">Stop</button>
+    <button id="playRecord1">Play</button>
+    <script src="index.js"></script>
 </body>
 </html>
