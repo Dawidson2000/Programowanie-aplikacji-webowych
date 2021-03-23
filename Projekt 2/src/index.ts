@@ -1,6 +1,8 @@
 let channel1: any[] = [];
 let activeChannel: boolean = false;
 
+let timeClick: number;
+
 const audioTags: HTMLAudioElement[] = [];
 appStart();
 
@@ -11,7 +13,7 @@ function appStart() {
     const stopChannel1 = document.querySelector('#stopRecord1');
     const playChannel1 = document.querySelector('#playRecord1');
     
-    startChannel1.addEventListener('click', startRecord);
+    startChannel1.addEventListener('click', (ev) => this.startRecord(ev));
     stopChannel1.addEventListener('click', stopRecord);
     playChannel1.addEventListener('click', playRecord);
 
@@ -39,7 +41,9 @@ function renderButtons(): void{
     })
 }
 
-function startRecord(): void {
+function startRecord(ev: MouseEvent): void{
+    timeClick = ev.timeStamp;
+    console.log(timeClick);
     activeChannel = true;
     channel1 = [];
 }
@@ -58,14 +62,12 @@ function playRecord(): void {
 function onKeyPress(ev: KeyboardEvent): void {
     console.log(ev);
     const key = ev.key;
-    const time = Date.now();
-    console.log(time + "XD");
+    const time = ev.timeStamp - timeClick;
 
     if(activeChannel)
         channel1.push({ key, time });
 
     playSound(key);
-    //console.log(channel1);
 }
 
 function playSound(key: string): void {
