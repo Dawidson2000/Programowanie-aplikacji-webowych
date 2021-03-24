@@ -1,6 +1,7 @@
 var channel1 = [];
 var activeChannel = false;
 var timeClick;
+var numberOfChannels = 4;
 var audioTags = [];
 appStart();
 function appStart() {
@@ -14,6 +15,7 @@ function appStart() {
     playChannel1.addEventListener('click', playRecord);
     getAudioTags();
     renderButtons();
+    renderChannels();
 }
 function getAudioTags() {
     var audio = document.querySelectorAll('audio');
@@ -30,6 +32,32 @@ function renderButtons() {
         button.id = element.dataset.key;
         buttonsDiv.appendChild(button);
     });
+}
+function renderChannels() {
+    var _this = this;
+    var channelsDiv = document.getElementById('channels');
+    for (var i = 0; i < numberOfChannels; i++) {
+        var channel = document.createElement('div');
+        var startButton = document.createElement('button');
+        startButton.className = 'startBtn';
+        startButton.dataset.channel = "" + i;
+        startButton.innerText = "start";
+        startButton.addEventListener('click', function (ev) { return _this.startRecord(ev); });
+        channel.appendChild(startButton);
+        var stopButton = document.createElement('button');
+        stopButton.className = 'stopBtn';
+        stopButton.dataset.channel = "" + i;
+        stopButton.innerText = "stop";
+        stopButton.addEventListener('click', stopRecord);
+        channel.appendChild(stopButton);
+        var playButton = document.createElement('button');
+        playButton.className = 'playBtn';
+        playButton.dataset.channel = "" + i;
+        playButton.innerText = "play";
+        playButton.addEventListener('click', playRecord);
+        channel.appendChild(playButton);
+        channelsDiv.appendChild(channel);
+    }
 }
 function startRecord(ev) {
     timeClick = ev.timeStamp;
@@ -49,11 +77,9 @@ function onKeyPress(ev) {
     console.log(ev);
     var key = ev.key;
     var time = ev.timeStamp - timeClick;
-    console.log(time + "XD");
     if (activeChannel)
         channel1.push({ key: key, time: time });
     playSound(key);
-    //console.log(channel1);
 }
 function playSound(key) {
     try {
