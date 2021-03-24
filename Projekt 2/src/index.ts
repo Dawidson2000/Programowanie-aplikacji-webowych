@@ -1,8 +1,11 @@
 let channel1: any[] = [];
 let activeChannel: boolean = false;
 
+let channels: any[][] = [[]];
+
 let timeClick: number;
 
+const numberOfChannels: number = 4;
 const audioTags: HTMLAudioElement[] = [];
 appStart();
 
@@ -20,6 +23,7 @@ function appStart() {
 
     getAudioTags();
     renderButtons();
+    renderChannels();
 }
 
 function getAudioTags(): void{
@@ -39,6 +43,38 @@ function renderButtons(): void{
         button.id = element.dataset.key;
         buttonsDiv.appendChild(button);
     })
+}
+
+function renderChannels(): void{
+    const channelsDiv = document.getElementById('channels');
+
+    for(let i=0; i<numberOfChannels; i++)
+    {
+        let channel = document.createElement('div');
+        
+        let startButton = document.createElement('button');
+            startButton.className = 'startBtn';
+            startButton.dataset.channel = "" + i;
+            startButton.innerText = "start";
+            startButton.addEventListener('click', (ev) => this.startRecord(ev));
+            channel.appendChild(startButton);
+
+        let stopButton = document.createElement('button');
+            stopButton.className = 'stopBtn';
+            stopButton.dataset.channel = "" + i;
+            stopButton.innerText = "stop";
+            stopButton.addEventListener('click', stopRecord);
+            channel.appendChild(stopButton);
+
+        let playButton = document.createElement('button');
+            playButton.className = 'playBtn';
+            playButton.dataset.channel = "" + i;
+            playButton.innerText = "play";
+            playButton.addEventListener('click', playRecord);
+            channel.appendChild(playButton);
+
+        channelsDiv.appendChild(channel);    
+    }
 }
 
 function startRecord(ev: MouseEvent): void{
