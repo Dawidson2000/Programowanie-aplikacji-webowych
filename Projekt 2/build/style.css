@@ -3,3 +3,15 @@
     background-color: red;
     transition-duration: 0.25s;
 }
+.hidden
+{
+    visibility: hidden;
+}
+.startBtn
+{
+    position: absolute;
+}
+.noClick
+{
+    pointer-events: none;
+}

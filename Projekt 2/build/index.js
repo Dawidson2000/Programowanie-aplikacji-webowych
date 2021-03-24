@@ -1,18 +1,11 @@
-var channel1 = [];
-var activeChannel = false;
+var activeChannel;
 var timeClick;
 var numberOfChannels = 4;
+var channels = [[]];
 var audioTags = [];
 appStart();
 function appStart() {
-    var _this = this;
     document.addEventListener('keypress', onKeyPress);
-    var startChannel1 = document.querySelector('#startRecord1');
-    var stopChannel1 = document.querySelector('#stopRecord1');
-    var playChannel1 = document.querySelector('#playRecord1');
-    startChannel1.addEventListener('click', function (ev) { return _this.startRecord(ev); });
-    stopChannel1.addEventListener('click', stopRecord);
-    playChannel1.addEventListener('click', playRecord);
     getAudioTags();
     renderButtons();
     renderChannels();
@@ -36,49 +29,76 @@ function renderButtons() {
 function renderChannels() {
     var _this = this;
     var channelsDiv = document.getElementById('channels');
-    for (var i = 0; i < numberOfChannels; i++) {
+    var _loop_1 = function (i) {
         var channel = document.createElement('div');
         var startButton = document.createElement('button');
         startButton.className = 'startBtn';
+        startButton.id = 'start-' + i;
         startButton.dataset.channel = "" + i;
         startButton.innerText = "start";
-        startButton.addEventListener('click', function (ev) { return _this.startRecord(ev); });
+        startButton.addEventListener('click', function (ev) { return _this.startRecord(ev, i); });
         channel.appendChild(startButton);
         var stopButton = document.createElement('button');
         stopButton.className = 'stopBtn';
         stopButton.dataset.channel = "" + i;
         stopButton.innerText = "stop";
-        stopButton.addEventListener('click', stopRecord);
+        stopButton.id = 'stop-' + i;
+        stopButton.addEventListener('click', function (ev) { return _this.stopRecord(ev, i); });
+        stopButton.classList.toggle('hidden');
         channel.appendChild(stopButton);
         var playButton = document.createElement('button');
         playButton.className = 'playBtn';
         playButton.dataset.channel = "" + i;
         playButton.innerText = "play";
-        playButton.addEventListener('click', playRecord);
+        playButton.addEventListener('click', function (ev) { return _this.playRecord(ev, i); });
         channel.appendChild(playButton);
         channelsDiv.appendChild(channel);
+        channels.push([]);
+    };
+    for (var i = 0; i < numberOfChannels; i++) {
+        _loop_1(i);
     }
 }
-function startRecord(ev) {
+function startRecord(ev, numberOfChannel) {
     timeClick = ev.timeStamp;
-    console.log(timeClick);
-    activeChannel = true;
-    channel1 = [];
+    activeChannel = numberOfChannel;
+    channels[activeChannel] = [];
+    console.log(activeChannel);
+    hiddenButton(numberOfChannel);
+    disableOrEnableCButton();
 }
-function stopRecord() {
-    activeChannel = false;
+function stopRecord(ev, numberOfChannel) {
+    activeChannel = null;
+    hiddenButton(numberOfChannel);
+    disableOrEnableCButton();
 }
-function playRecord() {
-    channel1.forEach(function (sound) {
-        setTimeout(function () { return playSound(sound.key); }, sound.time);
+function playRecord(ev, numberOfChannel) {
+    console.log(channels);
+    console.log(activeChannel);
+    if (activeChannel === null) {
+        channels[numberOfChannel].forEach(function (sound) {
+            setTimeout(function () { return playSound(sound.key); }, sound.time);
+        });
+    }
+}
+function hiddenButton(id) {
+    var startBtn = document.getElementById("start-" + id);
+    var stoptBtn = document.getElementById("stop-" + id);
+    stoptBtn.classList.toggle('hidden');
+    startBtn.classList.toggle('hidden');
+}
+function disableOrEnableCButton() {
+    document.querySelectorAll('.startBtn').forEach(function (element) {
+        element.classList.toggle('noClick');
     });
 }
 function onKeyPress(ev) {
     console.log(ev);
     var key = ev.key;
     var time = ev.timeStamp - timeClick;
-    if (activeChannel)
-        channel1.push({ key: key, time: time });
+    console.log(channels);
+    if (activeChannel != null)
+        channels[activeChannel].push({ key: key, time: time });
     playSound(key);
 }
 function playSound(key) {
