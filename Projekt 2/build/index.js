@@ -21,7 +21,7 @@ function renderButtons() {
     audioTags.forEach(function (element) {
         var button = document.createElement('button');
         button.className = 'soundButton';
-        button.innerText = element.dataset.key;
+        button.innerText = element.dataset.key.toUpperCase();
         button.id = element.dataset.key;
         buttonsDiv.appendChild(button);
     });
@@ -31,17 +31,22 @@ function renderChannels() {
     var channelsDiv = document.getElementById('channels');
     var _loop_1 = function (i) {
         var channel = document.createElement('div');
+        channel.className = "channel";
         var startButton = document.createElement('button');
         startButton.className = 'startBtn';
         startButton.id = 'start-' + i;
         startButton.dataset.channel = "" + i;
-        startButton.innerText = "start";
+        var iconRecord = document.createElement('i');
+        iconRecord.className = "icon-record";
+        startButton.appendChild(iconRecord);
         startButton.addEventListener('click', function (ev) { return _this.startRecord(ev, i); });
         channel.appendChild(startButton);
         var stopButton = document.createElement('button');
         stopButton.className = 'stopBtn';
         stopButton.dataset.channel = "" + i;
-        stopButton.innerText = "stop";
+        var iconStop = document.createElement('i');
+        iconStop.className = "icon-stop";
+        stopButton.appendChild(iconStop);
         stopButton.id = 'stop-' + i;
         stopButton.addEventListener('click', function (ev) { return _this.stopRecord(ev, i); });
         stopButton.classList.toggle('hidden');
@@ -49,7 +54,9 @@ function renderChannels() {
         var playButton = document.createElement('button');
         playButton.className = 'playBtn';
         playButton.dataset.channel = "" + i;
-        playButton.innerText = "play";
+        var iconPlay = document.createElement('i');
+        iconPlay.className = "icon-play";
+        playButton.appendChild(iconPlay);
         playButton.addEventListener('click', function (ev) { return _this.playRecord(ev, i); });
         channel.appendChild(playButton);
         channelsDiv.appendChild(channel);
@@ -58,6 +65,11 @@ function renderChannels() {
     for (var i = 0; i < numberOfChannels; i++) {
         _loop_1(i);
     }
+    var playAllButton = document.createElement('button');
+    playAllButton.id = "playAllBtn";
+    playAllButton.innerText = "PLAY ALL";
+    playAllButton.addEventListener('click', function (ev) { return _this.playAll(ev); });
+    channelsDiv.appendChild(playAllButton);
 }
 function startRecord(ev, numberOfChannel) {
     timeClick = ev.timeStamp;
@@ -80,6 +92,10 @@ function playRecord(ev, numberOfChannel) {
             setTimeout(function () { return playSound(sound.key); }, sound.time);
         });
     }
+}
+function playAll(ev) {
+    for (var i = 0; i < numberOfChannels; i++)
+        playRecord(ev, i);
 }
 function hiddenButton(id) {
     var startBtn = document.getElementById("start-" + id);
@@ -115,5 +131,5 @@ function playAnimation(key) {
     document.getElementById(key).classList.toggle('onClick');
     setTimeout(function () {
         document.getElementById(key).classList.toggle('onClick');
-    }, 150);
+    }, 300);
 }

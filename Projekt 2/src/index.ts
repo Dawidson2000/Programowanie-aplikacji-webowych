@@ -29,7 +29,7 @@ function renderButtons(): void{
     audioTags.forEach((element) => {
         let button = document.createElement('button');
         button.className = 'soundButton';
-        button.innerText = element.dataset.key;
+        button.innerText = element.dataset.key.toUpperCase();
         button.id = element.dataset.key;
         buttonsDiv.appendChild(button);
     })
@@ -41,19 +41,24 @@ function renderChannels(): void{
     for(let i=0; i<numberOfChannels; i++)
     {
         let channel = document.createElement('div');
+        channel.className = "channel";
         
         let startButton = document.createElement('button');
             startButton.className = 'startBtn';
             startButton.id = 'start-' + i;
             startButton.dataset.channel = "" + i;
-            startButton.innerText = "start";
+            let iconRecord = document.createElement('i');
+            iconRecord.className = "icon-record";
+            startButton.appendChild(iconRecord);
             startButton.addEventListener('click', (ev) => this.startRecord(ev, i));
             channel.appendChild(startButton);
 
         let stopButton = document.createElement('button');
             stopButton.className = 'stopBtn';
             stopButton.dataset.channel = "" + i;
-            stopButton.innerText = "stop";
+            let iconStop = document.createElement('i');
+            iconStop.className = "icon-stop";
+            stopButton.appendChild(iconStop);
             stopButton.id = 'stop-' + i;
             stopButton.addEventListener('click', (ev) => this.stopRecord(ev, i));
             stopButton.classList.toggle('hidden');
@@ -62,13 +67,22 @@ function renderChannels(): void{
         let playButton = document.createElement('button');
             playButton.className = 'playBtn';
             playButton.dataset.channel = "" + i;
-            playButton.innerText = "play";
+            let iconPlay = document.createElement('i');
+            iconPlay.className = "icon-play";
+            playButton.appendChild(iconPlay);
             playButton.addEventListener('click', (ev) => this.playRecord(ev, i));
             channel.appendChild(playButton);
 
         channelsDiv.appendChild(channel);
         channels.push([]);    
     }
+
+    let playAllButton = document.createElement('button');
+        playAllButton.id = "playAllBtn";
+        playAllButton.innerText = "PLAY ALL";
+        playAllButton.addEventListener('click', (ev) => this.playAll(ev));
+        channelsDiv.appendChild(playAllButton);
+
 }
 
 function startRecord(ev: MouseEvent, numberOfChannel: number): void{
@@ -97,7 +111,11 @@ function playRecord(ev: MouseEvent, numberOfChannel: number): void {
             setTimeout(() => playSound(sound.key), sound.time)
         });
     }
+}
 
+function playAll(ev: MouseEvent): void{
+    for(let i=0; i<numberOfChannels; i++)
+        playRecord(ev,i);
 }
 
 function hiddenButton(id: number): void{
@@ -141,5 +159,5 @@ function playAnimation(key: string): void{
 
     setTimeout( () => {
         document.getElementById(key).classList.toggle('onClick');
-    }, 150);
+    }, 300);
 }
