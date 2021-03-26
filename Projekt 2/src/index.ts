@@ -70,6 +70,7 @@ function renderChannels(): void{
             let iconPlay = document.createElement('i');
             iconPlay.className = "icon-play";
             playButton.appendChild(iconPlay);
+            playButton.id = 'play-' + i;
             playButton.addEventListener('click', (ev) => this.playRecord(ev, i));
             channel.appendChild(playButton);
 
@@ -105,8 +106,10 @@ function stopRecord(ev: MouseEvent, numberOfChannel: number): void {
 function playRecord(ev: MouseEvent, numberOfChannel: number): void {
     console.log(channels);
     console.log(activeChannel);
-    
+
     if(activeChannel===null){
+        switchPlayButton(numberOfChannel);
+
         channels[numberOfChannel].forEach(sound => {
             setTimeout(() => playSound(sound.key), sound.time)
         });
@@ -118,6 +121,22 @@ function playAll(ev: MouseEvent): void{
         playRecord(ev,i);
 }
 
+function switchPlayButton(numberOfChannel: number): void{
+    let time: number;
+    document.getElementById("play-" + numberOfChannel).classList.toggle('noClickPlay');
+    //document.getElementById("playAllBtn").classList.toggle('noClick');
+    
+    if(channels[numberOfChannel].length-1 >=0){
+        time = channels[numberOfChannel][channels[numberOfChannel].length-1].time;   
+        setTimeout(() => {
+            document.getElementById("play-" + numberOfChannel).classList.toggle('noClickPlay')
+            //document.getElementById("playAllBtn").classList.toggle('noClick');
+        }, time+200);
+    }
+    else
+        document.getElementById("play-" + numberOfChannel).classList.toggle('noClickPlay')
+}
+    
 function hiddenButton(id: number): void{
     const startBtn = document.getElementById("start-" + id);
     const stoptBtn = document.getElementById("stop-" + id);

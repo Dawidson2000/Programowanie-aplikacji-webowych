@@ -57,6 +57,7 @@ function renderChannels() {
         var iconPlay = document.createElement('i');
         iconPlay.className = "icon-play";
         playButton.appendChild(iconPlay);
+        playButton.id = 'play-' + i;
         playButton.addEventListener('click', function (ev) { return _this.playRecord(ev, i); });
         channel.appendChild(playButton);
         channelsDiv.appendChild(channel);
@@ -87,7 +88,9 @@ function stopRecord(ev, numberOfChannel) {
 function playRecord(ev, numberOfChannel) {
     console.log(channels);
     console.log(activeChannel);
+    //document.getElementById("play-" + numberOfChannel).classList.toggle('noClick');
     if (activeChannel === null) {
+        switchPlayButton(numberOfChannel);
         channels[numberOfChannel].forEach(function (sound) {
             setTimeout(function () { return playSound(sound.key); }, sound.time);
         });
@@ -96,6 +99,20 @@ function playRecord(ev, numberOfChannel) {
 function playAll(ev) {
     for (var i = 0; i < numberOfChannels; i++)
         playRecord(ev, i);
+}
+function switchPlayButton(numberOfChannel) {
+    var time;
+    document.getElementById("play-" + numberOfChannel).classList.toggle('noClickPlay');
+    //document.getElementById("playAllBtn").classList.toggle('noClick');
+    if (channels[numberOfChannel].length - 1 >= 0) {
+        time = channels[numberOfChannel][channels[numberOfChannel].length - 1].time;
+        setTimeout(function () {
+            document.getElementById("play-" + numberOfChannel).classList.toggle('noClickPlay');
+            //document.getElementById("playAllBtn").classList.toggle('noClick');
+        }, time + 200);
+    }
+    else
+        document.getElementById("play-" + numberOfChannel).classList.toggle('noClickPlay');
 }
 function hiddenButton(id) {
     var startBtn = document.getElementById("start-" + id);
