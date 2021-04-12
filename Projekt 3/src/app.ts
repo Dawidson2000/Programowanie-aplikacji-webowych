@@ -29,9 +29,16 @@ export class App {
             return '';    
     }
 
+    checkInputValue(city: string): boolean {
+        if(city && (this.cityTab.find(el => el === city) === undefined))
+            return true;
+        else
+            return false;
+    }
+
     async addCity(city: string) {
         
-        if(city){           
+        if(this.checkInputValue(city)){           
             const weather = await this.getWeather(city);
             this.renderCityContainer(weather);
             
@@ -46,19 +53,21 @@ export class App {
         const container = document.getElementById('cities');
 
         let cityContainer = document.createElement('div');
-        cityContainer.innerText = `${cityWeather.name}: ${cityWeather.main.temp}`;
-        container.appendChild(cityContainer);
+            cityContainer.innerText = `${cityWeather.name}: ${cityWeather.main.temp}`;
+            container.appendChild(cityContainer);
     }
          
     saveData(data: any) {
-        localStorage.setItem('cityTab', JSON.stringify(this.cityTab));
+        localStorage.setItem('cityTab', JSON.stringify(data));
     }
     
     getData() {
         const data = JSON.parse(localStorage.getItem('cityTab'));
     
-        data.forEach((city: string) => {
-            this.addCity(city);
-        })
+        if(data.length > 0){
+            data.forEach((city: string) => {
+                this.addCity(city);
+            })
+        }
     }
 }
