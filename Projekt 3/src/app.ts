@@ -38,7 +38,9 @@ export class App {
 
     async addCity(city: string) {
         const weather = await this.getWeather(city);
+        
         if(weather.name){
+        
             if(this.checkInputValue(city)){                      
                 this.renderCityContainer(weather);
                 
@@ -82,7 +84,7 @@ export class App {
             cityContainer.appendChild(mainWeather);
 
         const humidity = document.createElement('div');
-            humidity.innerText = `Ciśnienie: ${cityWeather.main.pressure}hPA`;
+            humidity.innerText = `Ciśnienie: ${cityWeather.main.pressure} hPA`;
             humidity.className = 'mainWeather';
             cityContainer.appendChild(humidity);
 
@@ -98,7 +100,7 @@ export class App {
             cityContainer.appendChild(windIcon);
         
         const windSpeed = document.createElement('div');
-            windSpeed.innerText = `Prędkość: ${cityWeather.wind.speed}m/s`;
+            windSpeed.innerText = `Prędkość: ${cityWeather.wind.speed} m/s`;
             windSpeed.className = 'windDescription';
             cityContainer.appendChild(windSpeed);
             

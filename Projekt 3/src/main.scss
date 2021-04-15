@@ -30,6 +30,8 @@ body {
   align-items: center;
   box-sizing: border-box;
   padding-bottom: 5px;
+  overflow: hidden;
+  hyphens: auto;
 }
 .cityName{
   font-size: 30px;
@@ -51,8 +53,8 @@ body {
 }
 .line{
   width: 200px;
-  border-top: 2px solid black;
-  opacity: 0.4;
+  border-top: 2px solid white;
+  opacity: 0.3;
   margin: 15px;
 }
 .mainWeather{
