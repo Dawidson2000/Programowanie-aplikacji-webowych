@@ -11,8 +11,10 @@ export class App {
     async getWeather(city: string): Promise<any> {
         const openWeatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${this.opwApiKey}`;
         const weatherResponse = await fetch(openWeatherUrl);
+        if(!weatherResponse.ok){
+            alert('Nie znaleziono miasta!');
+        }
         const weatherData = await weatherResponse.json();
-        //console.log(weatherData);
         return weatherData;
     }
 
@@ -22,11 +24,8 @@ export class App {
     
     getCityInputValue(): string{
         const cityInput: HTMLInputElement = document.querySelector('#cityInput'); 
-        
-        if(cityInput.value)
-            return cityInput.value;
-        else 
-            return '';    
+             
+        return cityInput.value;       
     }
 
     checkInputValue(city: string): boolean {
@@ -37,17 +36,17 @@ export class App {
     }
 
     async addCity(city: string) {
-        const weather = await this.getWeather(city);
-        
-        if(weather.name){
-        
-            if(this.checkInputValue(city)){                      
-                this.renderCityContainer(weather);
-                
-                this.cityTab.push(city.toLowerCase());
-                console.log(this.cityTab);
+        if(city){
+            const weather = await this.getWeather(city);
+            if(weather.name){       
+                if(this.checkInputValue(city)){                      
+                    this.renderCityContainer(weather);
+                    
+                    this.cityTab.push(city.toLowerCase());
+                    console.log(this.cityTab);
 
-                this.saveData(this.cityTab);
+                    this.saveData(this.cityTab);
+                }
             }
         }
     }
