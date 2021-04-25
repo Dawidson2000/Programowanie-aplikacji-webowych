@@ -1,18 +1,38 @@
 export class App {
-    opwApiKey = 'aeb41085d1ec0c2e19555ebec96e8f97';
+    opwApiKey = '97e3198fe1d705d4cd61ff117b4231b2';
+    //50d53005c0fd5f556bb4ef15224c4209
+    //97e3198fe1d705d4cd61ff117b4231b2
 
     cityTab: string[] = [];
 
     constructor() {
         this.setButtonEvent();
         this.getData();
+        
+        setInterval( () => {
+            this.refreshWeather();
+        }, 100000);
+    }
+
+    refreshWeather(){
+        document.getElementById('cities').innerText = null;
+        this.cityTab = [];
+        this.getData()
+    }
+    
+    showErrorMessage(message: string){
+        const errorContainer = document.getElementById("errorContainer");
+        errorContainer.classList.add('visible');
+        errorContainer.innerText = message;
+        
+        setTimeout(() => errorContainer.classList.remove('visible'), 3500);
     }
 
     async getWeather(city: string): Promise<any> {
         const openWeatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${this.opwApiKey}`;
         const weatherResponse = await fetch(openWeatherUrl);
         if(!weatherResponse.ok){
-            alert('Nie znaleziono miasta!');
+            this.showErrorMessage("Nie znaleziono miasta!");
         }
         const weatherData = await weatherResponse.json();
         return weatherData;
@@ -27,20 +47,28 @@ export class App {
              
         return cityInput.value;       
     }
+    
+    showExistedCity(container: HTMLElement){
+        container.classList.add('existedCity');
+        setTimeout(() => container.classList.remove('existedCity'), 1000);
+    }
 
     checkInputValue(city: string): boolean {
         if(city && (this.cityTab.find(el => el === city.toLowerCase()) === undefined))
             return true;
-        else
+        else{
+            this.showExistedCity(document.getElementById(city.toLowerCase()));
+            this.showErrorMessage("Podane miasto zostało już dodane!");
             return false;
+        }
     }
 
     async addCity(city: string) {
         if(city){
             const weather = await this.getWeather(city);
-            if(weather.name){       
-                if(this.checkInputValue(city)){                      
-                    this.renderCityContainer(weather);
+            if(weather.name){
+                if(this.checkInputValue(city)){   
+                    this.renderCityContainer(weather, city.toLowerCase());
                     
                     this.cityTab.push(city.toLowerCase());
                     console.log(this.cityTab);
@@ -51,12 +79,26 @@ export class App {
         }
     }
 
-    renderCityContainer(cityWeather: any) {
+    removeCity(btn: HTMLButtonElement){
+        btn.parentElement.remove();
+        this.cityTab.splice(this.cityTab.indexOf(btn.parentElement.id), 1);
+        console.log(this.cityTab);
+        this.saveData(this.cityTab);
+    }
+
+    renderCityContainer(cityWeather: any, city: string) {
         const container = document.getElementById('cities');
         console.log(cityWeather);
 
         const cityContainer = document.createElement('div');
             cityContainer.className = 'card';
+            cityContainer.id = `${city}`;
+
+        const deleteBtn = document.createElement('button')
+            deleteBtn.className = 'deleteBtn';
+            deleteBtn.addEventListener('click', () => this.removeCity(deleteBtn))
+            deleteBtn.innerText = "X";
+            cityContainer.appendChild(deleteBtn);
         
         const cityName = document.createElement('div');
             cityName.innerText = `${cityWeather.name}`;
@@ -118,13 +160,12 @@ export class App {
     
     getData() {
         const data = JSON.parse(localStorage.getItem('cityTab'));
-    
-        if(data){
-            if(data.length > 0 && data){
-                data.forEach((city: string) => {
-                    this.addCity(city);
-                })
-            }
+        
+        if(data.length > 0 && data){
+            data.forEach((city: string) => {
+                this.addCity(city);
+            })
         }
+        
     }
 }
