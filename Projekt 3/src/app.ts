@@ -100,17 +100,17 @@ export class App {
             deleteBtn.innerText = "X";
             cityContainer.appendChild(deleteBtn);
         
-        const cityName = document.createElement('div');
+        const cityName = document.createElement('h1');
             cityName.innerText = `${cityWeather.name}`;
             cityName.className = 'cityName';
             cityContainer.appendChild(cityName);
 
-        const temp = document.createElement('div');
+        const temp = document.createElement('span');
             temp.innerText = `${(cityWeather.main.temp- 273.15).toFixed(1)}°C`;
             temp.className = 'temp';
             cityContainer.appendChild(temp);
             
-        const description = document.createElement('div');
+        const description = document.createElement('span');
             description.innerText = `${cityWeather.weather[0].main}`;
             description.className = 'description';
             cityContainer.appendChild(description);
@@ -119,12 +119,12 @@ export class App {
             line.className = 'line';
             cityContainer.appendChild(line);
 
-        const mainWeather = document.createElement('div');
+        const mainWeather = document.createElement('span');
             mainWeather.innerText = `Wilgotność: ${cityWeather.main.humidity}%`;
             mainWeather.className = 'mainWeather';
             cityContainer.appendChild(mainWeather);
 
-        const humidity = document.createElement('div');
+        const humidity = document.createElement('span');
             humidity.innerText = `Ciśnienie: ${cityWeather.main.pressure} hPA`;
             humidity.className = 'mainWeather';
             cityContainer.appendChild(humidity);
@@ -140,12 +140,12 @@ export class App {
             windIcon.className = 'wind';
             cityContainer.appendChild(windIcon);
         
-        const windSpeed = document.createElement('div');
+        const windSpeed = document.createElement('span');
             windSpeed.innerText = `Prędkość: ${cityWeather.wind.speed} m/s`;
             windSpeed.className = 'windDescription';
             cityContainer.appendChild(windSpeed);
             
-        const windDirection = document.createElement('div');
+        const windDirection = document.createElement('span');
             windDirection.innerText = `Kierunek: ${cityWeather.wind.deg}°`;
             windDirection.className = 'windDescription2';
             cityContainer.appendChild(windDirection);
@@ -165,7 +165,6 @@ export class App {
             data.forEach((city: string) => {
                 this.addCity(city);
             })
-        }
-        
+        }        
     }
 }
