@@ -3,12 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
     <title>Notekeep</title>
   </head>
   <body>
     <main>
       <input id='newNoteInput' type="text" placeholder="Wpisz miasto">
       <button type="button" id="newNoteButton">DODAJ</button>
+      <div id="addNote">
+        <span>DODAJ NOTATKĘ</span>
+        <button id="showNewNotePanelBtn">+</button>
+      </div>
+      <div id="newNotePanel">
+        <input id="noteTitleInput" type="text" placeholder="Tytuł">
+        <input id="noteBodyeInput" type="text" placeholder="Stwórz notatkę">
+        <div id="colorWrapper">
+          <span>Wybierz kolor</span>
+          <input id="noteColorInput" type="color">
+        </div>
+      </div>
+      <div id="notes">
+      </div>
     </main>
     <script src="index.js"></script>
   </body>

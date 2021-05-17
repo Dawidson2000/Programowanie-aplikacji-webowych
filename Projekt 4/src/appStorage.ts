@@ -10,14 +10,15 @@ export class AppStorage{
         localStorage.setItem('noteTab', JSON.stringify(data));
     }
     
-    getData() {
+    getData():string[] {
         const data = JSON.parse(localStorage.getItem('noteTab'));
-        
+        this.noteTab = [];
+
         if(data && data.length > 0){
             data.forEach((note: string) => {
-                console.log(`FromLocalStorage: ${note}`)
                 this.noteTab.push(note);
             })
-        }        
+        }
+        return this.noteTab;        
     }
 }
