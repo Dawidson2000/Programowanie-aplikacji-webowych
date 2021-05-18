@@ -1,21 +1,23 @@
-export class AppStorage{
+import {INote} from './noteInterface';
 
-    noteTab: string[] = [];
+export class AppStorage<INote>{
+
+    noteTab: INote[] = [];
 
     constructor(){
         this.getData();
     }
 
-    saveData(data: any) {
+    saveData(data: INote) {
         localStorage.setItem('noteTab', JSON.stringify(data));
     }
     
-    getData():string[] {
+    getData(): INote[] {
         const data = JSON.parse(localStorage.getItem('noteTab'));
         this.noteTab = [];
 
         if(data && data.length > 0){
-            data.forEach((note: string) => {
+            data.forEach((note: INote) => {
                 this.noteTab.push(note);
             })
         }

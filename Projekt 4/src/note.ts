@@ -1,14 +1,18 @@
+import {INote} from './noteInterface';
+
 export class Note{
+
     constructor(){
     }
 
-    renderNote(title: string){
+    renderNote(note: INote){
         const noteContainer: HTMLElement = document.getElementById("notes");
 
-        const note = document.createElement('div');
-        note.className = "note";
-        note.innerText = title;
-        noteContainer.appendChild(note);
+        const noteCard = document.createElement('div');
+        noteCard.className = "note";
+        noteCard.innerText = note.title + ' ' + note.body + ' ' + note.date;
+        noteCard.style.backgroundColor = note.color;
+        noteContainer.appendChild(noteCard);
     }
 
 }

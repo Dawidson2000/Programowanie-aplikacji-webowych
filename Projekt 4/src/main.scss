@@ -1,5 +1,6 @@
 $mainColor: #202124;
 $greyFont: #80868b;
+$yellowButton: #fbbc04;
 
 @mixin flexCenter {
   display: flex;
@@ -16,10 +17,10 @@ main{
   flex-direction: column;
 }
 .note{
-  width: 50px;
-  height: 20px;
   background-color: brown;
   margin: 2px;
+  min-height: 20px;
+  min-width: 20px;
 }
 #addNote{
   background-color: $mainColor;
@@ -43,14 +44,14 @@ main{
     width: 40px;
     border-radius: 50%;
     border: none;
-    background-color: #fbbc04;
+    background-color: $yellowButton;
     font-size: 30px;
     transition: 0.05s;
     @include flexCenter();
     cursor: pointer;
 
     &:hover{
-      background-color: lighten(#fbbc04, 10%);
+      background-color: lighten($yellowButton, 10%);
     }
     &:active{
       transform: scale(0.95);
@@ -93,15 +94,19 @@ main{
   height: 32px;
   border-radius: 5px;
   @include flexCenter();
+  cursor: pointer;
   
   &>span{
     color: $greyFont;
     font-weight: 600;
-    font-size: 14px;  
+    font-size: 14px;
+    z-index: 0;
+    
+    &:hover{
+      color: white;
+    }    
   }
-  &:hover{
-    background-color: lighten($mainColor, 10%);
-  }  
+ 
 }
 
 #noteColorInput{
@@ -118,4 +123,22 @@ main{
 }
 .rotate{
   transform: rotate(45deg) !important;
+}
+#newNoteButton{
+  margin-left: auto;
+  background-color: $yellowButton;
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  @include flexCenter();
+  font-weight: 550;
+  font-size: 14px;
+  cursor: pointer;
+  
+  &:hover{
+    background-color: lighten($yellowButton, 10%);
+  }
+  &:active{
+    transform: scale(0.95);
+  }
 }
