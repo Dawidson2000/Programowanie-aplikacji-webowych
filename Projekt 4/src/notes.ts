@@ -10,7 +10,8 @@ export class Notes{
     }
     
     addNote(note: INote){
-        this.appStorage.noteTab.push(note);
+        const notes = this.appStorage.getData() as INote[];
+        notes.push(note);
         console.log(this.appStorage.noteTab);
         
         this.appStorage.saveData(this.appStorage.noteTab);

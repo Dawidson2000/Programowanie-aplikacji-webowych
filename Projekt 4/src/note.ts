@@ -50,14 +50,13 @@ export class Note{
 
     deleteNote(note: HTMLElement){
         note.parentElement.remove();
-        console.log(this.appStorage.noteTab);
-
+ 
         const notes = this.appStorage.getData() as INote[]
 
-       notes.forEach((element: INote, index: number) =>{
+        notes.forEach((element: INote, index: number) =>{
             console.log(index);
             if(note.parentElement.id===element.date.toString())
-                this.appStorage.noteTab.splice(index, 1);
+                notes.splice(index, 1);
         })
 
         this.appStorage.saveData(notes);
