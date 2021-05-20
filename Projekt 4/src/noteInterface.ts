@@ -3,4 +3,5 @@ export interface INote{
     body: string;
     color: string;
     date: number;
+    isPinned: boolean;
 }

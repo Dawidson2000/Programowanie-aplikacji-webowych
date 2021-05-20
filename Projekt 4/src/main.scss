@@ -71,6 +71,7 @@ main{
   overflow: hidden;
   box-sizing: border-box;
   padding: 15px;
+  position: relative;
 
   &>input{
     background: none;
@@ -134,6 +135,7 @@ main{
   font-weight: 550;
   font-size: 14px;
   cursor: pointer;
+  display: none;
   
   &:hover{
     background-color: lighten($yellowButton, 10%);
@@ -141,4 +143,21 @@ main{
   &:active{
     transform: scale(0.95);
   }
+}
+
+#pinnedNotes{
+  background-color: red;
+  padding: 20px;
+}
+#unpinnedNotes{
+  background-color: blue;
+  padding: 20px;
+}
+#pinNote{
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 30px !important;
+  width: 30px !important;
+  margin: 15px;
 }

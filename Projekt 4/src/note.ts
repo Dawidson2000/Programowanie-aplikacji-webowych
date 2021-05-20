@@ -6,13 +6,17 @@ export class Note{
     }
 
     renderNote(note: INote){
-        const noteContainer: HTMLElement = document.getElementById("notes");
+        const unpinnedNotesContainer: HTMLElement = document.getElementById("unpinnedNotes");
+        const pinnedNotesContainer: HTMLElement = document.getElementById("pinnedNotes");
 
         const noteCard = document.createElement('div');
         noteCard.className = "note";
-        noteCard.innerText = note.title + ' ' + note.body + ' ' + note.date;
+        noteCard.innerText = note.title + ' ' + note.body + ' ' + note.date + note.isPinned;
         noteCard.style.backgroundColor = note.color;
-        noteContainer.appendChild(noteCard);
+        
+        if(note.isPinned) pinnedNotesContainer.appendChild(noteCard);
+        else unpinnedNotesContainer.appendChild(noteCard);
+        
     }
 
 }

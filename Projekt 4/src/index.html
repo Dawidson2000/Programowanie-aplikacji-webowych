@@ -13,15 +13,18 @@
         <button id="showNewNotePanelBtn">+</button>
       </div>
       <div id="newNotePanel">
-        <input id="noteTitleInput" type="text" placeholder="Tytuł">
-        <input id="noteBodyeInput" type="text" placeholder="Stwórz notatkę">
+        <input id="noteTitleInput" type="text" placeholder="Tytuł" required>
+        <input id="noteBodyeInput" type="text" placeholder="Stwórz notatkę" required>
         <div id="colorWrapper">
           <span>Wybierz kolor</span>
           <input id="noteColorInput" type="color">
         </div>
         <button type="button" id="newNoteButton">ZAKOŃCZ</button>
+        <input type="checkbox" id="pinNote">
       </div>
-      <div id="notes">
+      <div id="pinnedNotes">
+      </div>
+      <div id="unpinnedNotes">
       </div>
     </main>
     <script src="index.js"></script>

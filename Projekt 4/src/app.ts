@@ -5,6 +5,13 @@ import {INote} from './noteInterface';
 export class App {
     notes = new Notes();
     appStorage = new AppStorage();
+    
+    noteTitleInput: HTMLInputElement = document.querySelector('#noteTitleInput');
+    noteBodyeInput: HTMLInputElement = document.querySelector('#noteBodyeInput');
+    noteColorInput: HTMLInputElement = document.querySelector('#noteColorInput');
+    notePinCheckBox: HTMLInputElement = document.querySelector('#pinNote');
+    closeButton: HTMLButtonElement = document.querySelector('#newNoteButton');
+    newNotePanel: HTMLElement = document.getElementById('newNotePanel');
 
     constructor() {
         this.setButtonsEvent();
@@ -13,38 +20,52 @@ export class App {
     }
 
     setButtonsEvent() {
-        document.getElementById('newNoteButton').addEventListener('click', () =>this.notes.addNote(this.handleAddNote()));
+        this.closeButton.addEventListener('click', () =>this.notes.addNote(this.handleAddNote()));
         
-        const newNotePanel: HTMLElement = document.getElementById('newNotePanel');
-        document.getElementById('showNewNotePanelBtn').addEventListener('click', ()=> this.setElementVisibility(newNotePanel));
+        document.getElementById('showNewNotePanelBtn').addEventListener('click', ()=> this.setElementVisibility(this.newNotePanel));
     }
     
     setInputsEvent() {
-        const colorInput = <HTMLInputElement>document.getElementById('noteColorInput');
-        colorInput.addEventListener('input', () =>  this.changePanelColor(colorInput))
+        this.noteColorInput.addEventListener('input', () =>  this.changePanelColor(this.noteColorInput))
+
+        this.noteTitleInput.addEventListener('input', ()=> this.setButtonActive(this.noteTitleInput))
     }
 
-    setElementVisibility(Element: HTMLElement){
-        Element.classList.toggle("visible");
+
+    setElementVisibility(element: HTMLElement){
+        element.classList.toggle("visible");
         document.getElementById('showNewNotePanelBtn').classList.toggle('rotate');
+        this.setDefaultValues(this.newNotePanel);
+    }
+
+    setButtonActive(noteTitleInput: HTMLInputElement){
+             
+        if(noteTitleInput.value)
+           this.closeButton.classList.add("visible");
+        else
+            this.closeButton.classList.remove("visible");   
     }
 
     handleAddNote(): INote{
-        const newNotePanel: HTMLElement = document.getElementById('newNotePanel');
-        this.setElementVisibility(newNotePanel);
         const note = this.getNotesElements();
+        this.setElementVisibility(this.newNotePanel);
+              
+        this.setDefaultValues(this.newNotePanel);
+        this.setButtonActive(this.noteTitleInput);       
         
-        this.setDefaultValues(newNotePanel);       
         return note;       
     }
 
     getNotesElements(): INote{
-        const noteTitleInput: HTMLInputElement = document.querySelector('#noteTitleInput');
-        const noteBodyeInput: HTMLInputElement = document.querySelector('#noteBodyeInput');
-        const noteColorInput: HTMLInputElement = document.querySelector('#noteColorInput');
-        const date = Date.now(); 
+        const date = Date.now();
+        
+        console.log(this.noteTitleInput.value);
              
-        return {title: noteTitleInput.value, body: noteBodyeInput.value, color: noteColorInput.value, date: date};       
+        return {title: this.noteTitleInput.value, 
+                body: this.noteBodyeInput.value, 
+                color: this.noteColorInput.value, 
+                date: date, 
+                isPinned: this.notePinCheckBox.checked};       
     }
 
     changePanelColor(colorInput: HTMLInputElement){
@@ -53,12 +74,10 @@ export class App {
     }
 
     setDefaultValues(newNotePanel: HTMLElement){
-        const noteTitleInput: HTMLInputElement = document.querySelector('#noteTitleInput');
-        const noteBodyeInput: HTMLInputElement = document.querySelector('#noteBodyeInput');
-        const noteColorInput: HTMLInputElement = document.querySelector('#noteColorInput'); 
-
-        noteTitleInput.value = null;
-        noteBodyeInput.value = null;
+        this.notePinCheckBox.checked = false;
+        this.noteTitleInput.value = '';
+        this.noteBodyeInput.value = '';
+        this.noteColorInput.value = '#202124';
         newNotePanel.style.backgroundColor = '#202124';
     }
 
