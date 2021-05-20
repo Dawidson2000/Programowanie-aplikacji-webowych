@@ -1,6 +1,8 @@
 import {INote} from './noteInterface';
+import {AppStorage} from "./appStorage";
 
 export class Note{
+    appStorage = new AppStorage();
 
     constructor(){
     }
@@ -11,6 +13,7 @@ export class Note{
 
         const noteCard = document.createElement('div');
         noteCard.className = "note";
+        noteCard.id = note.date.toString();
             const titleHeader = document.createElement('h2')
             titleHeader.innerText = note.title;
 
@@ -19,10 +22,15 @@ export class Note{
 
             const date = document.createElement('span');
             date.innerText = this.convertMilisecondsToHumanFriendlyDate(note.date);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.innerText = "+";
+            deleteBtn.addEventListener('click', ()=>this.deleteNote(deleteBtn))
         
         noteCard.appendChild(titleHeader);
         noteCard.appendChild(noteBody);    
-        noteCard.appendChild(date);        
+        noteCard.appendChild(date);
+        noteCard.appendChild(deleteBtn);        
         
         noteCard.style.backgroundColor = note.color;
         
@@ -38,6 +46,17 @@ export class Note{
         const humanDateFormat = dateObject.toLocaleString();
 
         return humanDateFormat;
+    }
+
+    deleteNote(note: HTMLElement){
+        note.parentElement.remove();
+      
+        this.appStorage.noteTab.forEach((element: INote, index: number) =>{
+            if(note.parentElement.id===element.date.toString())
+                this.appStorage.noteTab.splice(index, 1);
+        })
+
+        this.appStorage.saveData(this.appStorage.noteTab);
     }
 
 }

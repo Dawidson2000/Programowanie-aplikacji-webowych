@@ -25,11 +25,12 @@ main{
   flex-direction: column;
   margin: 10px;
   height: fit-content;
-  max-width: 200px;
+  max-width: 210px;
   padding: 10px;
   border-radius: 10px;
   color: white;
   transition: 0.15s linear;
+  position: relative;
 
   @if background-color==$mainColor{
     @include lightgrayBorder();
@@ -38,19 +39,47 @@ main{
   &>h2{
     margin-bottom: 15px;
     margin-top: 0;
+    margin-right: 10px;
   }
+  
   &>span{
     width: 100%;
     font-size: 10px;
     text-align: right;
     margin-top: 15px;
   }
+  
   &>p{
     word-wrap: break-word;
     margin: 0; 
   }
+  
   &:hover{
     transform: scale(1.05);
+    
+    &>button{
+      visibility: visible;
+    }
+  }
+  
+  &>button{
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0px;
+    background: none;
+    border: none;
+    color: white;
+    transform: rotate(45deg);
+    font-size: 20px;
+    visibility: hidden;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+
+    &:hover{
+      transform: scale(1.2) rotate(45deg);
+    }
   }
 }
 #addNote{
@@ -213,11 +242,22 @@ main{
   flex-direction: row;
   flex-wrap: wrap;
 }
-#pinNote{
+#checkboxWrapper{
   position: absolute;
   top: 0;
   right: 0;
-  height: 30px !important;
-  width: 30px !important;
   margin: 15px;
+  display: flex;
+  align-items: center;
+  color: $greyFont;
+  font-weight: 600;
+  
+  &>input{
+    height: 20px !important;
+    width: 20px !important;
+  }
+  &>label{
+    font-size: 12px;
+  }
 }
+
