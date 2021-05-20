@@ -8,8 +8,12 @@ $yellowButton: #fbbc04;
   justify-content: center;
 }
 
+@mixin lightgrayBorder{
+  border: 1px solid #80868b;
+}
+
 body {
-  background: lightblue;
+  background: #202124;
   font-family: 'Montserrat', sans-serif;
 }
 main{
@@ -17,10 +21,37 @@ main{
   flex-direction: column;
 }
 .note{
-  background-color: brown;
-  margin: 2px;
-  min-height: 20px;
-  min-width: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  height: fit-content;
+  max-width: 200px;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  transition: 0.15s linear;
+
+  @if background-color==$mainColor{
+    @include lightgrayBorder();
+  }
+
+  &>h2{
+    margin-bottom: 15px;
+    margin-top: 0;
+  }
+  &>span{
+    width: 100%;
+    font-size: 10px;
+    text-align: right;
+    margin-top: 15px;
+  }
+  &>p{
+    word-wrap: break-word;
+    margin: 0; 
+  }
+  &:hover{
+    transform: scale(1.05);
+  }
 }
 #addNote{
   background-color: $mainColor;
@@ -34,6 +65,8 @@ main{
   padding: 5px;
   color: white;
   font-weight: 700;
+  @include lightgrayBorder();
+  margin: 10px;
 
   &>span{
     margin: 0 10px;
@@ -72,16 +105,25 @@ main{
   box-sizing: border-box;
   padding: 15px;
   position: relative;
+  @include lightgrayBorder();
 
   &>input{
     background: none;
     border: none;
-    width: 100%;
+    width: 80%;
     height: 30px;
     color: white;
     outline: none;
     font-weight: 550;
     font-size: 14px;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus, 
+    &:-webkit-autofill:active  {
+      transition: background-color 5000s;
+      -webkit-text-fill-color: #fff !important;
+    }
 
     &::placeholder{
       color: $greyFont;
@@ -144,14 +186,32 @@ main{
     transform: scale(0.95);
   }
 }
-
-#pinnedNotes{
-  background-color: red;
+#pinnedNotesWrapper{
+  width: 80%;
   padding: 20px;
+  @include lightgrayBorder();
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+    
+  &>h2{
+    color: $greyFont;
+    margin: 5px 0px;
+  }
+}
+#pinnedNotes{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 #unpinnedNotes{
-  background-color: blue;
+  width: 80%;
   padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 #pinNote{
   position: absolute;

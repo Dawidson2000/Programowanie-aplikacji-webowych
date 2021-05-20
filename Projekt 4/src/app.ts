@@ -48,8 +48,8 @@ export class App {
 
     handleAddNote(): INote{
         const note = this.getNotesElements();
+        
         this.setElementVisibility(this.newNotePanel);
-              
         this.setDefaultValues(this.newNotePanel);
         this.setButtonActive(this.noteTitleInput);       
         
