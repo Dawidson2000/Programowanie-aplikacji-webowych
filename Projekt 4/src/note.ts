@@ -1,5 +1,6 @@
 import {INote} from './noteInterface';
 import {AppStorage} from "./appStorage";
+import {Notes} from "./notes";
 
 export class Note{
     appStorage = new AppStorage();
@@ -16,10 +17,17 @@ export class Note{
         noteCard.id = note.date.toString();
             const titleHeader = document.createElement('h2')
             titleHeader.innerText = note.title;
+            titleHeader.addEventListener('blur', () => this.editNote(titleHeader, 'title'))
+            titleHeader.setAttribute('role', 'textbox');
+            titleHeader.contentEditable = 'true';
 
             const noteBody = document.createElement('p');
             noteBody.innerText = note.body;
-
+            noteBody.addEventListener('blur', () => this.editNote(noteBody, 'body'))
+            noteBody.style.backgroundColor = note.color;
+            noteBody.setAttribute('role', 'textbox');
+            noteBody.contentEditable = 'true';
+            
             const date = document.createElement('span');
             date.innerText = this.convertMilisecondsToHumanFriendlyDate(note.date);
 
@@ -30,7 +38,7 @@ export class Note{
         noteCard.appendChild(titleHeader);
         noteCard.appendChild(noteBody);    
         noteCard.appendChild(date);
-        noteCard.appendChild(deleteBtn);        
+        noteCard.appendChild(deleteBtn);  
         
         noteCard.style.backgroundColor = note.color;
         
@@ -60,6 +68,37 @@ export class Note{
         })
 
         this.appStorage.saveData(notes);
+    }
+
+    editNote(note: HTMLElement, noteElement: string){
+        const notes = this.appStorage.getData() as INote[]
+
+        notes.forEach((element: INote, index: number) =>{
+            if(note.parentElement.id===element.date.toString()){
+                if(noteElement==='body')
+                    element.body = note.innerText;
+                else  if(noteElement==='title')
+                    element.title = note.innerText;
+
+            element.date = Date.now();    
+            }                
+        })
+
+        this.appStorage.saveData(notes);
+
+       //GIGA NIESWIEŻE
+        const notes2 = this.appStorage.getData() as INote[];
+        
+        notes2.sort((a, b) => {
+            return b.date - a.date;
+        });
+
+        document.getElementById('pinnedNotes').innerHTML = null;
+        document.getElementById('unpinnedNotes').innerHTML = null;
+        
+        notes2.forEach((note: INote) => {
+            this.renderNote(note)
+        });
     }
 
 }

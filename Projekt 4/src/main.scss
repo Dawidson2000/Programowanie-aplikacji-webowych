@@ -40,6 +40,7 @@ main{
     margin-bottom: 15px;
     margin-top: 0;
     margin-right: 10px;
+    outline: none;
   }
   
   &>span{
@@ -51,7 +52,13 @@ main{
   
   &>p{
     word-wrap: break-word;
-    margin: 0; 
+    margin: 0;
+    max-width: 210px;
+    border: none;
+    height: auto;
+    outline: none;
+    min-width: 50px;
+    overflow: hidden;
   }
   
   &:hover{
