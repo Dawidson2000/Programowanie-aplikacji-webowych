@@ -68,8 +68,8 @@ main{
       visibility: visible;
     }
   }
-  
-  &>button{
+}
+.deleteBtn{
     position: absolute;
     right: 0;
     top: 0;
@@ -87,8 +87,36 @@ main{
     &:hover{
       transform: scale(1.2) rotate(45deg);
     }
-  }
 }
+.pinBtn{
+    position: absolute;
+    right: 4px;
+    top: 20px !important;
+    margin: 0px;
+    background: none;
+    border: none;  
+    font-size: 20px;
+    visibility: hidden;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+
+    & > i{
+      color: white;
+      font-size: 15px;
+      margin: 0 !important;
+      padding: 0;
+
+      &::before{
+        margin: 0;
+      }
+    }
+
+    &:hover{
+      transform: scale(1.1);
+    }
+}
+
 #addNote{
   background-color: $mainColor;
   display: flex;

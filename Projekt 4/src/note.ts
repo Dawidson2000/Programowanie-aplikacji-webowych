@@ -32,21 +32,30 @@ export class Note{
             date.innerText = this.convertMilisecondsToHumanFriendlyDate(note.date);
 
             const deleteBtn = document.createElement('button');
+            deleteBtn.className = "deleteBtn";
             deleteBtn.innerText = "+";
             deleteBtn.addEventListener('click', ()=>this.deleteNote(deleteBtn))
+
+            const pinBtn = document.createElement('button');
+            pinBtn.className = "pinBtn";
+                const pinIcon = document.createElement('i');
+                pinIcon.className = "icon-pin";
+            pinBtn.appendChild(pinIcon);
+            pinBtn.addEventListener('click', ()=>this.pinNote(pinBtn))
         
         noteCard.appendChild(titleHeader);
         noteCard.appendChild(noteBody);    
         noteCard.appendChild(date);
-        noteCard.appendChild(deleteBtn);  
+        noteCard.appendChild(deleteBtn);
+        noteCard.appendChild(pinBtn);  
         
         noteCard.style.backgroundColor = note.color;
         
         if(note.color==="#202124")
             noteCard.style.border = '1px solid #80868b';
 
-        if(note.isPinned) pinnedNotesContainer.appendChild(noteCard);
-        else unpinnedNotesContainer.appendChild(noteCard);       
+        if(note.isPinned) pinnedNotesContainer.prepend(noteCard);
+        else unpinnedNotesContainer.prepend(noteCard);       
     }
 
     convertMilisecondsToHumanFriendlyDate(miliseconds: number): any{
@@ -89,16 +98,34 @@ export class Note{
        //GIGA NIESWIEŻE
         const notes2 = this.appStorage.getData() as INote[];
         
-        notes2.sort((a, b) => {
-            return b.date - a.date;
-        });
-
         document.getElementById('pinnedNotes').innerHTML = null;
         document.getElementById('unpinnedNotes').innerHTML = null;
         
         notes2.forEach((note: INote) => {
             this.renderNote(note)
         });
+    }
+
+    pinNote(note: HTMLElement){
+        const notes = this.appStorage.getData() as INote[]
+
+        notes.forEach((element: INote, index: number) =>{
+            if(note.parentElement.id===element.date.toString()){
+                element.isPinned = !element.isPinned;
+            }                
+        })
+
+        this.appStorage.saveData(notes);
+
+       //GIGA NIESWIEŻE
+        const notes2 = this.appStorage.getData() as INote[];
+        
+        document.getElementById('pinnedNotes').innerHTML = null;
+        document.getElementById('unpinnedNotes').innerHTML = null;
+        
+        notes2.forEach((note: INote) => {
+            this.renderNote(note)
+        }); 
     }
 
 }
