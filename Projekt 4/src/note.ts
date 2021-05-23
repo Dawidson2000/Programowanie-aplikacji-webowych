@@ -89,14 +89,14 @@ export class Note{
                 else  if(noteElement==='title')
                     element.title = note.innerText;
 
-            element.date = Date.now();   
+            element.date = Date.now();    
             }                
         })
 
         this.appStorage.saveData(notes);
 
        //GIGA NIESWIEŻE
-       //this.RefreshNote();
+        this.refreshNote();
     }
 
     pinNote(note: HTMLElement){
@@ -111,10 +111,11 @@ export class Note{
         this.appStorage.saveData(notes);
 
        //GIGA NIESWIEŻE
-       this.RefreshNote();       
+       this.refreshNote();
+        
     }
 
-    RefreshNote(){
+    refreshNote(){
         const notes2 = this.appStorage.getData() as INote[];
         
         document.getElementById('pinnedNotes').innerHTML = null;
