@@ -68,15 +68,7 @@ export class Note{
     deleteNote(note: HTMLElement){
         note.parentElement.remove();
  
-        const notes = this.appStorage.getData() as INote[]
-
-        notes.forEach((element: INote, index: number) =>{
-            console.log(index);
-            if(note.parentElement.id===element.date.toString())
-                notes.splice(index, 1);
-        })
-
-        this.appStorage.saveData(notes);
+        this.appStorage.deleteFromStorage(note);
     }
 
     editNote(note: HTMLElement, noteElement: string){

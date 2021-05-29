@@ -8,7 +8,7 @@ export class AppStorage<INote>{
         this.getData();
     }
 
-    saveData(data: INote) {
+    saveData(data: INote[]) {
         localStorage.setItem('noteTab', JSON.stringify(data));
     }
     
@@ -22,5 +22,17 @@ export class AppStorage<INote>{
             })
         }
         return this.noteTab;        
+    }
+
+    deleteFromStorage(note: HTMLElement){
+        const notes = this.getData();
+        
+        notes.forEach((element: any, index: number) =>{
+            console.log(index);
+            if(note.parentElement.id===element.date.toString())
+                notes.splice(index, 1);
+        })
+
+        this.saveData(notes);
     }
 }

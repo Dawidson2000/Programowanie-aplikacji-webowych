@@ -265,7 +265,7 @@ main{
 }
 #pinnedNotes{
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
 }
@@ -273,7 +273,7 @@ main{
   width: 80%;
   padding: 20px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
 }
