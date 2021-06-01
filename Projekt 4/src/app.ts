@@ -1,6 +1,6 @@
 import {Notes} from "./notes";
-import {AppStorage} from "./appStorage";
-import {INote} from './noteInterface';
+import AppStorage from "./appStorage";
+import {INote} from './interfaces';
 
 export class App {
     notes = new Notes();
@@ -65,7 +65,8 @@ export class App {
                 body: this.noteBodyeInput.value, 
                 color: this.noteColorInput.value, 
                 date: date, 
-                isPinned: this.notePinCheckBox.checked};       
+                isPinned: this.notePinCheckBox.checked,
+                id: date.toString()};       
     }
 
     changePanelColor(colorInput: HTMLInputElement){

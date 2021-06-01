@@ -1,6 +1,6 @@
-import {AppStorage} from "./appStorage";
+import AppStorage from "./appStorage";
 import {Note} from "./note";
-import {INote} from './noteInterface';
+import {INote} from './interfaces';
 
 export class Notes{
     appStorage = new AppStorage();
@@ -9,19 +9,15 @@ export class Notes{
     constructor(){
     }
     
-    addNote(note: INote){
-        const notes = this.appStorage.getData() as INote[];
-        notes.push(note);
-        console.log(this.appStorage.noteTab);
-        
-        this.appStorage.saveData(this.appStorage.noteTab);
+    async addNote(note: INote){
+     
+        this.appStorage.saveNote(note);
 
         this.note.renderNote(note);
     }
 
-    loadNotesFromStorage(){
-       const notes = this.appStorage.getData() as INote[];
-
+    async loadNotesFromStorage(){
+       const notes = await this.appStorage.getNotes() as INote[];
         notes.forEach((note: INote) => {
             this.note.renderNote(note)
         });

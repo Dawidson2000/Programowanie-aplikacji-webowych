@@ -1,5 +1,6 @@
-import {INote} from './noteInterface';
-import {AppStorage} from "./appStorage";
+import {INote} from './interfaces';
+
+import AppStorage from "./appStorage";
 import {Notes} from "./notes";
 
 export class Note{
@@ -71,49 +72,50 @@ export class Note{
         this.appStorage.deleteFromStorage(note);
     }
 
-    editNote(note: HTMLElement, noteElement: string){
-        const notes = this.appStorage.getData() as INote[]
-
+    async editNote(note: HTMLElement, noteElement: string){
+        console.log('edit');
+        const notes = await this.appStorage.getNotes() as INote[];
+        
         notes.forEach((element: INote, index: number) =>{
             if(note.parentElement.id===element.date.toString()){
                 if(noteElement==='body')
                     element.body = note.innerText;
                 else  if(noteElement==='title')
                     element.title = note.innerText;
-
-            element.date = Date.now();    
+ 
+            element.date = Date.now();
+            
+            this.appStorage.updateNote(element);
             }                
         })
-
-        this.appStorage.saveData(notes);
+        
 
        //GIGA NIESWIEŻE
         this.refreshNote();
     }
 
-    pinNote(note: HTMLElement){
-        const notes = this.appStorage.getData() as INote[]
+    async pinNote(note: HTMLElement){
+        const notes = await this.appStorage.getNotes() as INote[];;
 
         notes.forEach((element: INote, index: number) =>{
             if(note.parentElement.id===element.date.toString()){
-                element.isPinned = !element.isPinned;
+               element.isPinned = !element.isPinned;
+               this.appStorage.updateNote(element);          
             }                
         })
 
-        this.appStorage.saveData(notes);
-
        //GIGA NIESWIEŻE
        this.refreshNote();
-        
+      
     }
 
-    refreshNote(){
-        const notes2 = this.appStorage.getData() as INote[];
+    async refreshNote(){
+        const notes = await this.appStorage.getNotes();
         
         document.getElementById('pinnedNotes').innerHTML = null;
         document.getElementById('unpinnedNotes').innerHTML = null;
         
-        notes2.forEach((note: INote) => {
+        notes.forEach((note: INote) => {
             this.renderNote(note)
         }); 
     }
