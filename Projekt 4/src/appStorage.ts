@@ -43,14 +43,9 @@ export class LocalStorage implements IStorage{
         localStorage.setItem('noteTab', JSON.stringify(notes));
     }
 
-    async deleteFromStorage(note: HTMLElement){
-        const notes = await this.getNotes();
-        
-        notes.forEach((element: INote, index: number) =>{
-            console.log(index);
-            if(note.parentElement.id===element.date.toString())
-                notes.splice(index, 1);
-        })
+    async deleteFromStorage(note: INote){
+        const notes = JSON.parse(localStorage.getItem('noteTab'));
+        notes.splice(notes.findIndex((elem: INote) => elem.id === note.id), 1);
 
         localStorage.setItem('noteTab', JSON.stringify(notes));
     }
@@ -91,14 +86,8 @@ export class AppFirestoreStorage implements IStorage{
         return Promise.resolve(data as unknown as INote[]);        
     }
 
-    async deleteFromStorage(note: HTMLElement){      
-        const notes = await this.getNotes();
-
-        notes.forEach(async (element: any, index: number) =>{
-            console.log(index);
-            if(note.parentElement.id===element.date.toString())
-                await db.collection('notes').doc(element.id).delete();
-        })
+    async deleteFromStorage(note: INote){      
+        await db.collection('notes').doc(note.id).delete();
     }
 
     async updateNote(note: INote) {

@@ -10,5 +10,5 @@ export interface IStorage{
     saveNote: (note: INote) => Promise<void>;
     getNotes: () => Promise<INote[]>;
     updateNote: (note: INote) => Promise<void>;
-    deleteFromStorage: (note: HTMLElement) => Promise<void>;
+    deleteFromStorage: (note: INote) => Promise<void>;
 }

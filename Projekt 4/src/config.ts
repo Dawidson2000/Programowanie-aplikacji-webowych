@@ -4,5 +4,5 @@ export enum storageType {
 }
 
 export const config = {
-    storageType: storageType.AppFirestoreStorage
+    storageType: storageType.LocalStorage
 }

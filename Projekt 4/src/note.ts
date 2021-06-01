@@ -66,10 +66,18 @@ export class Note{
         return humanDateFormat;
     }
 
-    deleteNote(note: HTMLElement){
+    async deleteNote(note: HTMLElement){
         note.parentElement.remove();
- 
-        this.appStorage.deleteFromStorage(note);
+        
+        const notes = await this.appStorage.getNotes();
+
+        notes.forEach(async (element: any, index: number) =>{
+            console.log(index);
+            if(note.parentElement.id===element.date.toString()){                 
+                this.appStorage.deleteFromStorage(element);
+            }
+                
+        })
     }
 
     async editNote(note: HTMLElement, noteElement: string){
