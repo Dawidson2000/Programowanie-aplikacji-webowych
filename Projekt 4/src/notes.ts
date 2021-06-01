@@ -10,7 +10,6 @@ export class Notes{
     }
     
     async addNote(note: INote){
-     
         this.appStorage.saveNote(note);
 
         this.note.renderNote(note);

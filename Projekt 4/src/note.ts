@@ -99,7 +99,7 @@ export class Note{
         
 
        //GIGA NIESWIEŻE
-        this.refreshNote();
+        this.refreshNote(notes);
     }
 
     async pinNote(note: HTMLElement){
@@ -113,13 +113,12 @@ export class Note{
         })
 
        //GIGA NIESWIEŻE
-       this.refreshNote();
+       this.refreshNote(notes);
       
     }
 
-    async refreshNote(){
-        const notes = await this.appStorage.getNotes();
-        
+    refreshNote(notes: INote[]){
+       
         document.getElementById('pinnedNotes').innerHTML = null;
         document.getElementById('unpinnedNotes').innerHTML = null;
         
