@@ -1,5 +1,5 @@
 export enum storageType {
-    LocalStorage,
+    AppLocalStorage,
     AppFirestoreStorage
 }
 

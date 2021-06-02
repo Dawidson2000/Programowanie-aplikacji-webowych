@@ -1,6 +1,6 @@
 import {INote} from './interfaces';
 
-import AppStorage from "./appStorage";
+import AppStorage from "./AppStorage";
 import {Notes} from "./notes";
 
 export class Note{
@@ -81,7 +81,6 @@ export class Note{
     }
 
     async editNote(note: HTMLElement, noteElement: string){
-        console.log('edit');
         const notes = await this.appStorage.getNotes() as INote[];
         
         notes.forEach((element: INote, index: number) =>{

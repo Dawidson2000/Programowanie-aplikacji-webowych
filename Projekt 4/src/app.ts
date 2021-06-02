@@ -1,5 +1,5 @@
 import {Notes} from "./notes";
-import AppStorage from "./appStorage";
+import AppStorage from "./AppStorage";
 import {INote} from './interfaces';
 
 export class App {

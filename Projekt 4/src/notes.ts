@@ -1,4 +1,4 @@
-import AppStorage from "./appStorage";
+import AppStorage from "./AppStorage";
 import {Note} from "./note";
 import {INote} from './interfaces';
 
