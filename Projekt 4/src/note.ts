@@ -117,7 +117,6 @@ export class Note{
     }
 
     refreshNote(notes: INote[]){
-       
         document.getElementById('pinnedNotes').innerHTML = null;
         document.getElementById('unpinnedNotes').innerHTML = null;
         

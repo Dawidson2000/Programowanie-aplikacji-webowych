@@ -53,7 +53,7 @@ export class App {
         setTimeout(() => container.classList.remove('existedCity'), 1000);
     }
 
-    checkInputValue(city: string): boolean {
+    checkIfCityExist(city: string): boolean {
         if(city && (this.cityTab.find(el => el === city.toLowerCase()) === undefined))
             return true;
         else{
@@ -67,7 +67,7 @@ export class App {
         if(city){
             const weather = await this.getWeather(city);
             if(weather.name){
-                if(this.checkInputValue(city)){   
+                if(this.checkIfCityExist(city)){   
                     this.renderCityContainer(weather, city.toLowerCase());
                     
                     this.cityTab.push(city.toLowerCase());

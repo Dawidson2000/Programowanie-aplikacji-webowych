@@ -80,6 +80,5 @@ export class App {
         this.noteBodyeInput.value = '';
         this.noteColorInput.value = '#202124';
         newNotePanel.style.backgroundColor = '#202124';
-    }
-
+    }  
 }
