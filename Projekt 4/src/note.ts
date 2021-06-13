@@ -59,7 +59,7 @@ export class Note{
         else unpinnedNotesContainer.prepend(noteCard);       
     }
 
-    convertMilisecondsToHumanFriendlyDate(miliseconds: number): any{
+    convertMilisecondsToHumanFriendlyDate(miliseconds: number): string{
         const dateObject = new Date(miliseconds);
         const humanDateFormat = dateObject.toLocaleString();
 
@@ -71,7 +71,7 @@ export class Note{
         
         const notes = await this.appStorage.getNotes();
 
-        notes.forEach(async (element: any, index: number) =>{
+        notes.forEach(async (element: INote, index: number) =>{
             console.log(index);
             if(note.parentElement.id===element.date.toString()){                 
                 this.appStorage.deleteFromStorage(element);

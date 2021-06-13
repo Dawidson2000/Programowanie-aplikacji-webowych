@@ -6,9 +6,11 @@ let AppStorage: typeof AppFirestoreStorage | typeof AppLocalStorage;
 
 switch (config.storageType) {
     case storageType.AppFirestoreStorage:
-        AppStorage = AppFirestoreStorage; break;
+        AppStorage = AppFirestoreStorage; 
+        break;
     case storageType.AppLocalStorage:
-        AppStorage = AppLocalStorage; break;
+        AppStorage = AppLocalStorage; 
+        break;
     default:
         AppStorage = AppLocalStorage;
 }
