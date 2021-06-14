@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./fontello/css/fontello.css" type="text/css"/>
+    <title>Notekeep</title>
+  </head>
+  <body>
+    <main>
+      <div id="addNote">
+        <span>DODAJ NOTATKĘ</span>
+        <button id="showNewNotePanelBtn">+</button>
+      </div>
+      <div id="newNotePanel">
+        <input id="noteTitleInput" type="text" placeholder="Tytuł" required>
+        <input id="noteBodyInput" type="text" placeholder="Stwórz notatkę" required>
+        <div id="colorWrapper">
+          <span>Wybierz kolor</span>
+          <input id="noteColorInput" type="color">
+        </div>
+        <button type="button" id="newNoteButton">ZAKOŃCZ</button>
+        <div id="checkboxWrapper">
+          <input type="checkbox" id="pinNote"><label>Przypnij</label>
+        </div>
+      </div>
+      <div id="pinnedNotesWrapper">
+        <h2>Przypięte notatki</h2>
+        <div id='pinnedNotes'></div>
+      </div>
+      <div id="unpinnedNotes">
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>

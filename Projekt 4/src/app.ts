@@ -7,7 +7,7 @@ export class App {
     appStorage = new AppStorage();
     
     noteTitleInput: HTMLInputElement = document.querySelector('#noteTitleInput');
-    noteBodyeInput: HTMLInputElement = document.querySelector('#noteBodyeInput');
+    noteBodyeInput: HTMLInputElement = document.querySelector('#noteBodyInput');
     noteColorInput: HTMLInputElement = document.querySelector('#noteColorInput');
     notePinCheckBox: HTMLInputElement = document.querySelector('#pinNote');
     closeButton: HTMLButtonElement = document.querySelector('#newNoteButton');

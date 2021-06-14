@@ -29,8 +29,7 @@ export class AppFirestoreStorage implements IStorage{
             ...note.data,
             id: note.id,
         }));
-   
-        console.log(data);
+        
         this.noteTab = [];
 
        
